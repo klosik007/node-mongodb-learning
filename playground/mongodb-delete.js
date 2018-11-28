@@ -16,18 +16,18 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', {useNewUrlParser: true}
     const db = client.db('TodoApp');
 
     //deleteMany
-    // db.collection('Users').deleteMany({name: 'Andrew'}).then((result) =>{
-    //     console.log(result);
-    // });
+    db.collection('Users').deleteMany({name: 'Andrew'}).then((result) =>{
+        console.log(result);
+    });
     //deleteOne
-    // db.collection('Users').deleteOne({_id: 123}).then((result)=>{
-    //     console.log(result);
-    // });
+    db.collection('Users').deleteOne({_id: 123}).then((result)=>{
+        console.log(result);
+    });
     //findOneAndDelete
     db.collection('Users').findOneAndDelete({name: 'Przemek'}).then((result)=>{
         console.log(result);
     });
-    
+
     client.close();
 
     //db.close();
