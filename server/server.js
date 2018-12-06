@@ -9,7 +9,7 @@ var app = express();
 
 app.use(bodyParser.json());
 
-app.post('/todos', (req, res) =>{
+app.post('/todo2', (req, res) =>{
     //console.log(req.body);
     var todo = new Todo({
         text: req.body.text
@@ -22,8 +22,16 @@ app.post('/todos', (req, res) =>{
     });
 });
 
-app.get('/todos', (req, res) =>{
-    console.log(res.body);
+// app.get('/todos', (req, res) =>{
+//     console.log(res.body);
+// });
+
+app.get('/todo2', (req, res) =>{
+    Todo.find().then((todo2) =>{
+        res.send({todo2});
+    }, (e) =>{
+        res.status(400).send(e);
+    });
 });
 
 app.listen(3000, () =>{
