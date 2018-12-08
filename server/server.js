@@ -57,6 +57,30 @@ app.get('/user/:id', (req, res) =>{
     //400
 });
 
+app.get('/todo2/:id', (req, res) =>{
+    var id = req.params.id;
+
+    //valid id using isValid
+    //404 -send back empty send
+    if (!ObjectID.isValid(id)){
+        return res.status(404).send();
+    }
+
+    //findById
+    Todo.findById(id).then((todo2)=>{
+        if (!todo2) return res.status(404).send({});
+        //console.log('User by id:', user);
+        res.send({todo2});
+    }).catch((e) => res.status(400).send(e));
+    //success
+        //if todo - send it back
+        // if no todo - send back 404 with empty body
+    //error
+    //400
+});
+
+
+
 app.listen(3000, () =>{
     console.log('Started on port 3000');
 });
