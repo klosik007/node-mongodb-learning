@@ -112,9 +112,9 @@ describe('GET /todo2/:id', () =>{
         request(app)
             .get(`/todo2/${new ObjectID()}`)
             .expect(404)
-            .expect((res) =>{
-                expect(res.status).toBe(404);
-            })
+            // .expect((res) =>{
+            //     expect(res.status).toBe(404);
+            // })
             .end(done);
     });
 
@@ -123,11 +123,9 @@ describe('GET /todo2/:id', () =>{
         request(app)
             .get('/todo2/1234')
             .expect(404)
-            .expect((res) =>{
-                expect(res.status).toBe(404);
-            })
+            // .expect((res) =>{
+            //     expect(res.status).toBe(404);
+            // })
             .end(done);
     });
-
-
 });
