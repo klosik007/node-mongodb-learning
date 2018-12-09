@@ -238,5 +238,5 @@ describe('PATCH /todo2/:id', () =>{
                 done();
                 }).catch((e) => res.status(400).send());
             });
-        });
+        //});
 });
