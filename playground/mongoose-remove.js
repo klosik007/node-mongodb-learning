@@ -7,6 +7,8 @@ Todo.remove({}).then((result) =>{
     console.log(result);
 });
 
-
-
-
+//Todo.findOneAndRemove
+//Todo.findByIdAndRemove
+Todo.findByIdAndRemove('ss').then((todo) =>{
+    
+})

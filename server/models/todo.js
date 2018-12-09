@@ -8,7 +8,7 @@ var Todo = mongoose.model('todo2', {
         type: Boolean
     },
     completedAt: {
-        type: Number
+        type: Date
     }
 });
 
