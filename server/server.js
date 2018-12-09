@@ -121,7 +121,7 @@ app.patch('/todo2/:id', (req, res) =>{
         }
 
         res.send({todo2});
-    }).catch((e) =>{res.status(400). send()});
+    }).catch((e) =>{res.status(400). send();});
 });
 
 app.listen(port, () =>{
