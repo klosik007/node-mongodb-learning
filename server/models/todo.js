@@ -9,6 +9,10 @@ var Todo = mongoose.model('todo2', {
     },
     completedAt: {
         type: Date
+    },
+    _creator: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
     }
 });
 

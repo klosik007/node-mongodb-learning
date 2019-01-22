@@ -3,6 +3,7 @@ var {User} = require('./../models/user');
 var authenticate = (req, res, next) => {
     //var token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YzM2M2Q5YmM5MzFjMjI5ZTRjN2RiZGIiLCJhY2Nlc3MiOiJhdXRoIiwiaWF0IjoxNTQ3MDU4NTg3fQ.IIzDCv_sgkZamR02q9PQ5icYZ193poIEfZL7V2BLeQo';
     var token = req.header('x-auth');//still dont know why is this undefined when calling
+                                            //fixed - instead of header tab in postman, I tried to send params...
     console.log(token); 
     
     User.findByToken(token).then((user) =>{

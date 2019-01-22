@@ -16,10 +16,11 @@ const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
-app.post('/todo2', (req, res) =>{
+app.post('/todo2', authenticate, (req, res) =>{
     //console.log(req.body);
     var todo = new Todo({
-        text: req.body.text
+        text: req.body.text,
+        _creator: req.user._id
     });
 
     todo.save().then((doc) =>{
@@ -33,8 +34,10 @@ app.post('/todo2', (req, res) =>{
 //     console.log(res.body);
 // });
 
-app.get('/todo2', (req, res) =>{
-    Todo.find().then((todo2) =>{
+app.get('/todo2', authenticate, (req, res) =>{
+    Todo.find({
+        _creator: req.user._id
+    }).then((todo2) =>{
         res.send({todo2});
     }, (e) =>{
         res.status(400).send(e);
@@ -63,7 +66,7 @@ app.get('/user/:id', (req, res) =>{
     //400
 });
 
-app.get('/todo2/:id', (req, res) =>{
+app.get('/todo2/:id', authenticate, (req, res) =>{
     var id = req.params.id;
 
     //valid id using isValid
@@ -73,7 +76,10 @@ app.get('/todo2/:id', (req, res) =>{
     }
 
     //findById
-    Todo.findById(id).then((todo2)=>{
+    Todo.findOne({
+        _id: id,
+        _creator: req.user.id
+    }).then((todo2)=>{
         if (!todo2) return res.status(404).send({});
         //console.log('User by id:', user);
         res.send({todo2});
@@ -85,7 +91,7 @@ app.get('/todo2/:id', (req, res) =>{
     //400
 });
 
-app.delete('/todo2/:id', (req, res) =>{
+app.delete('/todo2/:id', authenticate, (req, res) =>{
     //get the id
     var id = req.params.id;
     //validate id -> 404 if not
@@ -94,7 +100,10 @@ app.delete('/todo2/:id', (req, res) =>{
     }
 
     //remove todo by id
-    Todo.findByIdAndRemove(id).then((todo2) =>{
+    Todo.findOneAndRemove({
+        _id: id,
+        _creator: req.user._id
+    }).then((todo2) =>{
         if (!todo2){
             return res.status(404).send();
         }
@@ -104,7 +113,7 @@ app.delete('/todo2/:id', (req, res) =>{
         //error
 });
 
-app.patch('/todo2/:id', (req, res) =>{
+app.patch('/todo2/:id', authenticate, (req, res) =>{
     var id = req.params.id;
     var body = _.pick(req.body, ['text', 'completed']);
 
@@ -119,7 +128,7 @@ app.patch('/todo2/:id', (req, res) =>{
         body.completedAt = null;
     }
 
-    Todo.findByIdAndUpdate(id, {$set: body}, {new: true}).then((todo2) =>{
+    Todo.findOneAndUpdate({_id: id, _creator: req.user._id}, {$set: body}, {new: true}).then((todo2) =>{
         if(!todo2){
             return res.status(404).send();
         }
@@ -161,6 +170,14 @@ app.post('/users/login', (req, res)=>{
             res.header('x-auth', token).send(user);
         })
     }).catch((e) =>{
+        res.status(400).send();
+    });
+});
+
+app.delete('/users/me/token', authenticate, (req, res) =>{
+    req.user.removeToken(req.token).then(()=>{
+        res.status(200).send();
+    }, ()=>{
         res.status(400).send();
     });
 });
