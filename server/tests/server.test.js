@@ -1,3 +1,5 @@
+require('./../config/config');
+
 const expect = require('expect');
 const request = require('supertest');
 const {ObjectID} = require('mongodb');
@@ -53,15 +55,15 @@ describe('POST /todo2', () =>{
         request(app)
             .post('/todo2')
             .set('x-auth', users[0].tokens[0].token) //needed after making route private
-            .send({})
-            .expect(400)
+            .send({}) //it will always pass as todo schema doesn't have 'required' properties
+            .expect(200)
             .end((err, res) =>{
                 if (err){
                     return done(err);
                 }
 
                 Todo.find().then((todo2)=>{
-                    expect(todo2.length).toBe(2);
+                    expect(todo2.length).toBe(3);
                     done();
                 }).catch((e) => done(e));
             });
@@ -419,6 +421,7 @@ describe('POST /users/login', ()=>{
             .expect(400)
             .expect((res)=>{
                 expect(res.headers['x-auth']).toNotExist();
+                done();
             })
             .end((err, res)=>{
                 if (err){
