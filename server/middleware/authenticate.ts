@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 var {User} = require('./../models/user');
 
 var authenticate = (req, res, next) => {

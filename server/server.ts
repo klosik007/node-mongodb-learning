@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 require('./config/config');
 
 var _ = require('lodash');

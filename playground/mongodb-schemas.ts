@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
