@@ -14,7 +14,7 @@ var {authenticate} = require('./middleware/authenticate');
 var bcrypt = require('bcryptjs');
 
 var app = express();
-const port = process.env.PORT || 3000;
+const port: number = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 

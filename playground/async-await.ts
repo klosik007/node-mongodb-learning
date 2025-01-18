@@ -1,12 +1,9 @@
-// @ts-nocheck
-
-const doWork = async () => {
-    return 'Przemo'
+const doWork = async (): Promise<string> => {
+    return 'Przemo';
 }
 
-// console.log(doWork())
-doWork().then((result) => {
-
-}).catch((e) => {
-
+doWork().then((result: string) => {
+    console.log(result)
+}).catch((e: any) => {
+    console.log(e)
 })

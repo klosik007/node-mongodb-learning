@@ -2,7 +2,8 @@
     "extends": "@tsconfig/node21/tsconfig.json",
     "compilerOptions": {
       "allowJs": true,
-      "outDir": "dist"
+      "outDir": "dist",
+      "types": ["node"]
     },
     "include": ["server/**/*", "playground/**/*"],
     "exclude": ["node_modules"]

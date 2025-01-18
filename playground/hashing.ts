@@ -1,50 +1,48 @@
-// @ts-nocheck
+import { SHA256 } from 'crypto-js'
+import jwt, { JwtPayload } from 'jsonwebtoken'
+import bcryptjs from 'bcryptjs'
 
-const {SHA256} = require('crypto-js');
-const jwt = require('jsonwebtoken');
-const bcryptjs = require('bcryptjs');
-
-var data = {
+const data: Object = {
     id: 10
 };
 
-var token = jwt.sign(data, 'fewf');
+const token: string = jwt.sign(data, 'fewf');
 console.log(token);
 
-var decoded = jwt.verify(token, 'fewf');
+const decoded: string | JwtPayload= jwt.verify(token, 'fewf');
 console.log(decoded);
 
-var password = '1124ffg';
+const password: string = '1124ffg';
 
-bcryptjs.genSalt(10, (err, salt) =>{
-    bcryptjs.hash(password, salt, (err, hash) =>{
+bcryptjs.genSalt(10, (err: Error | null, salt: string) =>{
+    bcryptjs.hash(password, salt, (err: Error | null, hash: string) =>{
         console.log(hash);
     });
 });
 
-var hashedPassword = '$2a$10$WVvMYsiU/nUWK6rVWdPL/u2n7NBlOi3SBZLaMYHDwuU3BSn8WRuti';
-bcryptjs.compare(password, hashedPassword, (err, res) =>{
+const hashedPassword: string = '$2a$10$WVvMYsiU/nUWK6rVWdPL/u2n7NBlOi3SBZLaMYHDwuU3BSn8WRuti';
+bcryptjs.compare(password, hashedPassword, (err: Error | null, res: boolean) =>{
     console.log(res);
 });
-// var message = "fswffwwgwgwg";
-// var hash = SHA256(message).toString();
+const message: string = "fswffwwgwgwg";
+const hash = SHA256(message).toString();
 
-// console.log(message, hash);
+console.log(message, hash);
 
-// var data = {
-//     id: 4
-// };
+const data2: { id: number } = {
+    id: 4
+};
 
-// var token ={
-//     data,
-//     hash: SHA256(JSON.stringify(data) + 'somesecret').toString()
-// };
+const token2: {data2: { id: number }, hash: string} = {
+    data2,
+    hash: SHA256(JSON.stringify(data) + 'somesecret').toString()
+};
 
-// var resultHash = SHA256(JSON.stringify(token.data) + 'somesecret').toString();
+const resultHash: string = SHA256(JSON.stringify(token2.data2) + 'somesecret').toString();
 
-// if (resultHash === token.hash){
-//     console.log('Data not changed');
-// }
-// else{
-//     console.log("Data changed");
-// }
+if (resultHash === token2.hash){
+    console.log('Data not changed');
+}
+else{
+    console.log("Data changed");
+}
